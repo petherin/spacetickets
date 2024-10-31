@@ -1,0 +1,107 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Space Tickets
+  description: 'Space Tickets API'
+  contact: {}
+host: 'localhost:8080'
+basePath: /api/v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/bookings':
+    get:
+      description: Get Bookings
+      summary: Get all bookings
+      tags:
+        - Bookings
+      operationId: BookingsGet
+      deprecated: false
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/booking':
+    post:
+      description: Create Booking
+      summary: Create booking
+      tags:
+        - Bookings
+      operationId: BookingPost
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreatebookingRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      description: Delete Booking
+      summary: Delete booking
+      tags:
+        - Bookings
+      operationId: BookingDelete
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: bookingID
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+definitions:
+  CreatebookingRequest:
+    title: CreatebookingRequest
+    example:
+      first_name: Ian
+      last_name: Thomson
+      gender: Male
+      birthday: "2000-04-12"
+      launch_pad_id: 5e9e4501f5090910d4566f83
+      destination_id: 3e9e4501f5090910d4566f85
+      launch_date: "2021-12-01"
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      gender:
+        type: string
+      birthday:
+        type: date
+      launch_pad_id:
+        type: string
+      destination_id:
+        type: string
+      launch_date:
+        type: date
+    required:
+      - first_name
+      - last_name
+      - gender
+      - birthday
+      - launchid
+      - destinationid
+      - launch_date
+tags:
+  - name: Bookings
+    description: 'Flight bookings'
