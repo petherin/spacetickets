@@ -20,6 +20,21 @@ push: ##@App Push image to Docker, provided you're logged in as the author
 test: ##@App Run all unit tests
 	go test -v ./...
 
+db: ##@Database Opens terminal in database container
+	docker exec -it spacetickets-db psql -U postgres -d example
+
+tables: ##@Database List database tables
+	docker exec -it spacetickets-db psql -U postgres -d example -c "\dt public.*"
+
+desc-bookings: ##@Database Describe bookings database table
+	docker exec -it spacetickets-db psql -U postgres -d example -c "\d bookings"
+
+desc-launchpads: ##@Database Describe launchpads database table
+	docker exec -it spacetickets-db psql -U postgres -d example -c "\d launchpads"
+
+desc-destinations: ##@Database Describe destinations database table
+	docker exec -it spacetickets-db psql -U postgres -d example -c "\d destinations"
+
 # Color settings for the making the help information look pretty
  GREEN  := $(shell tput -Txterm setaf 2)
  WHITE  := $(shell tput -Txterm setaf 7)
