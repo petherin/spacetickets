@@ -35,6 +35,15 @@ desc-launchpads: ##@Database Describe launchpads database table
 desc-destinations: ##@Database Describe destinations database table
 	docker exec -it spacetickets-db psql -U postgres -d example -c "\d destinations"
 
+select-bookings: ##@Database Select all rows from bookings database table
+	docker exec -it spacetickets-db psql -U postgres -d example -c "SELECT * FROM bookings;"
+
+select-launchpads: ##@Database Select all rows from launchpads database table
+	docker exec -it spacetickets-db psql -U postgres -d example -c "SELECT * FROM launchpads;"
+
+select-destinations: ##@Database Select all rows from destinations database table
+	docker exec -it spacetickets-db psql -U postgres -d example -c "SELECT * FROM destinations;"
+
 # Color settings for the making the help information look pretty
  GREEN  := $(shell tput -Txterm setaf 2)
  WHITE  := $(shell tput -Txterm setaf 7)
