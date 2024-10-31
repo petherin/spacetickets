@@ -1,10 +1,20 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/petherin/spacetickets/internal/infrastructure/http"
+	"github.com/petherin/spacetickets/internal/interfaces/api"
+)
 
 func main() {
-	log.Println("app running")
+	handlers := api.NewBookingHandlers(nil)
 
-	for {
+	svr := http.New(":8080", handlers)
+
+	log.Printf("API running at http://localhost%s/api/v1\n", ":8080")
+	log.Printf("Swagger server running at http://localhost%s\n", ":8081")
+	if err := svr.HTTPServer.ListenAndServe(); err != nil {
+		log.Fatalf("server error: %v", err)
 	}
 }
