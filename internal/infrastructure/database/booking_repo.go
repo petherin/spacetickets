@@ -96,6 +96,7 @@ func (p *PostGres) Delete(id string) (int64, error) {
 	return rowsAffected, nil
 }
 
+// GetLaunchPad gets a launchpad by id.
 func (p *PostGres) GetLaunchPad(id string) (*bookings.LaunchPad, error) {
 	var result bookings.LaunchPad
 
@@ -114,6 +115,7 @@ func (p *PostGres) GetLaunchPad(id string) (*bookings.LaunchPad, error) {
 	return &result, nil
 }
 
+// IsLaunchScheduleValid returns true if there is a launch from the requesed launch pad, day of the week, and destination.
 func (p *PostGres) IsLaunchScheduleValid(launchPadId, dayOfWeek, destinationId string) (bool, error) {
 	var count int
 

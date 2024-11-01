@@ -41,7 +41,7 @@ paths:
         - name: Body
           in: body
           required: true
-          description: ''
+          description: 'The default values here should create a booking successfully'
           schema:
             $ref: '#/definitions/CreatebookingRequest'
       responses:
@@ -75,9 +75,9 @@ definitions:
       last_name: Thomson
       gender: Male
       birthday: "2000-04-12"
-      launch_pad_id: d95c83bb-be3f-4bdb-93fe-77015d95f759
+      launch_pad_id: b542c0cf-7fe3-4bb1-a63f-7cbdf8359975
       destination_id: 466fc378-14eb-4ed9-8bec-d29abe54c5a9
-      launch_date: "2021-12-01"
+      launch_date: "2010-12-06"
     type: object
     properties:
       first_name:

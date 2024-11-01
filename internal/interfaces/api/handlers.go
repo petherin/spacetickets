@@ -11,16 +11,19 @@ import (
 	"github.com/petherin/spacetickets/internal/domains/bookings"
 )
 
+// BookingHandlers provides methods and dependencies needed to handle requests to the API.
 type BookingHandlers struct {
 	Booker            bookings.Booker
 	HTTPClient        *http.Client
 	SpaceXAPIEndpoint string
 }
 
+// NewBookingHandlers returns a new BookingHandlers object, assigning passed dependencies.
 func NewBookingHandlers(booker bookings.Booker, client *http.Client, spaceXAPIEndpoint string) BookingHandlers {
 	return BookingHandlers{Booker: booker, HTTPClient: client, SpaceXAPIEndpoint: spaceXAPIEndpoint}
 }
 
+// Get returns all bookings.
 func (b *BookingHandlers) Get(w http.ResponseWriter, r *http.Request) {
 	bookings, err := b.Booker.GetAll()
 	if err != nil {
@@ -37,6 +40,7 @@ func (b *BookingHandlers) Get(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Post validates the requested booking and creates it if so.
 func (b *BookingHandlers) Post(w http.ResponseWriter, r *http.Request) {
 	var booking bookings.Booking
 
@@ -46,8 +50,6 @@ func (b *BookingHandlers) Post(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "an error occurred, see logs", http.StatusInternalServerError)
 		return
 	}
-
-	// Validate we don't overlap with SpaceX launches on the requested launchpad.
 
 	launchPad, err := b.Booker.GetLaunchPad(booking.LaunchPadId)
 	if err != nil {
@@ -99,6 +101,7 @@ func (b *BookingHandlers) Post(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Delete marks the specified booking as deleted.
 func (b *BookingHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
 	if len(id) == 0 {
@@ -125,6 +128,7 @@ func (b *BookingHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"Status": "Record deleted"}`))
 }
 
+// getSpaceXLaunch contacts the SpaceX API to check if there is a SpaceX launch from the requested launchpad and date.
 func (b *BookingHandlers) getSpaceXLaunch(spaceXLaunchId string, booking bookings.Booking) (*bookings.SpaceXLaunches, error) {
 	fullURL, err := url.JoinPath(b.SpaceXAPIEndpoint, "/v4/launches/query")
 	if err != nil {
