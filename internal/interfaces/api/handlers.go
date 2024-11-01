@@ -37,7 +37,6 @@ func (b *BookingHandlers) Get(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		http.Error(w, "an error occurred, see logs", http.StatusInternalServerError)
 	}
-
 }
 
 // Post validates the requested booking and creates it if so.

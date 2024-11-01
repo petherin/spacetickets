@@ -8,7 +8,7 @@
 - [To Run](#to-run)
 - [Valid Schedules](#valid-schedules)
   * [Example Requests](#example-requests)
-- [Improvements](#improvements)
+- [Possible Improvements](#possible-improvements)
 
 <!-- tocstop -->
 
@@ -132,7 +132,7 @@ curl --location 'localhost:8080/api/v1/booking' \
 }'
 ```
 
-## Improvements
+## Possible Improvements
 * Improved error messages including the launchpad name, destination name and day of the week for their desired launch data. This would help users verify what they sent
 * Prevent creation of duplicate flights
 * When deleting a booking, respond with error if already marked as deleted
@@ -141,3 +141,4 @@ curl --location 'localhost:8080/api/v1/booking' \
 * Validate user input like sensible birthday, date formats, recognised launch_pad_id and destination_id
 * Endpoints to list the launchpads and destinations ids and names
 * Store users in database so they don't have to provide their name and birthday, they could just send an id, or log in so the system knows who they are
+* More unit test coverage
