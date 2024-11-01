@@ -48,6 +48,7 @@ paths:
         '200':
           description: ''
           headers: {}
+  '/booking/{bookingID}':
     delete:
       description: Delete Booking
       summary: Delete booking
