@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/petherin/spacetickets/internal/domains/bookings"
 )
@@ -81,20 +80,18 @@ func (p *PostGres) Create(booking bookings.Booking) (*bookings.Booking, error) {
 }
 
 // Delete marks a booking as deleted.
-func (p *PostGres) Delete(id string) error {
+func (p *PostGres) Delete(id string) (int64, error) {
 	query := `UPDATE bookings SET deleted = true WHERE id = $1`
 
 	result, err := p.Repo.Exec(query, id)
 	if err != nil {
-		return fmt.Errorf("could not mark booking as deleted: %w", err)
+		return 0, fmt.Errorf("could not mark booking as deleted: %w", err)
 	}
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		return fmt.Errorf("could not get rows affected: %w", err)
+		return 0, fmt.Errorf("could not get rows affected: %w", err)
 	}
 
-	log.Printf("Number of rows updated: %d\n", rowsAffected)
-
-	return nil
+	return rowsAffected, nil
 }

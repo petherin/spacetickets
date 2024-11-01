@@ -26,7 +26,7 @@ type Customer struct {
 type Booker interface {
 	GetAll() ([]Booking, error)
 	Create(booking Booking) (*Booking, error)
-	Delete(bookingId string) error
+	Delete(bookingId string) (int64, error)
 }
 
 // UnmarshalJSON unmarshals booking JSON so that dates have the proper time.Time format.

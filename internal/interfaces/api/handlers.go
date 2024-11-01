@@ -59,5 +59,27 @@ func (b *BookingHandlers) Post(w http.ResponseWriter, r *http.Request) {
 }
 
 func (b *BookingHandlers) Delete(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Delete"))
+	id := r.PathValue("id")
+	if len(id) == 0 {
+		http.NotFound(w, r)
+		return
+	}
+
+	rowsAffected, err := b.Booker.Delete(id)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "an error occurred, see logs", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	log.Printf("Number of rows updated: %d\n", rowsAffected)
+
+	if rowsAffected == 0 {
+		w.Write([]byte(`{"Status": "ID not recognised"}`))
+		return
+	}
+
+	w.Write([]byte(`{"Status": "Record deleted"}`))
 }
