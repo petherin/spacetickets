@@ -39,7 +39,7 @@ func main() {
 		},
 	}
 
-	handlers := api.NewBookingHandlers(repo, client)
+	handlers := api.NewBookingHandlers(repo, client, cfg.SpaceXAPIEndpoint)
 
 	svr := http.New(":8080", handlers)
 

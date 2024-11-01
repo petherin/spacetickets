@@ -95,3 +95,21 @@ func (p *PostGres) Delete(id string) (int64, error) {
 
 	return rowsAffected, nil
 }
+
+func (p *PostGres) GetLaunchPad(id string) (*bookings.LaunchPad, error) {
+	var result bookings.LaunchPad
+
+	err := p.Repo.QueryRow(`SELECT id, full_name, spacex_launchpad_id, created_at, updated_at FROM launchpads WHERE id = $1`, id).
+		Scan(
+			&result.Id,
+			&result.FullName,
+			&result.SpaceXLaunchPadId,
+			&result.CreatedAt,
+			&result.UpdatedAt,
+		)
+	if err != nil {
+		return nil, fmt.Errorf("error scanning launchpad: %w", err)
+	}
+
+	return &result, nil
+}

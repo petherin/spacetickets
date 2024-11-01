@@ -22,6 +22,7 @@ services:
       - DIALER_KEEP_ALIVE_SECS=0
       - TLS_HANDSHAKE_TIMEOUT_SECS=2
       - DISABLE_KEEP_ALIVES=true
+      - SPACEX_API_ENDPOINT=https://api.spacexdata.com
     ports:
       - 8080:8080
     networks:

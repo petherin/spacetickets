@@ -23,10 +23,44 @@ type Customer struct {
 	Birthday  time.Time `json:"birthday"`
 }
 
+type LaunchPad struct {
+	Id                string    `json:"id"`
+	FullName          string    `json:"full_name"`
+	SpaceXLaunchPadId string    `json:"spacex_launchpad_id"`
+	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
+}
+
+type SpaceXLaunches struct {
+	TotalDocs int `json:"totalDocs"`
+}
+
+type SpaceXLaunchesRequest struct {
+	Query           Query   `json:"query"`
+	Options         Options `json:"options"`
+	ResolveBodyOnly bool    `json:"resolveBodyOnly"`
+	ResponseType    string  `json:"responseType"`
+}
+
+type Query struct {
+	LaunchPad string  `json:"launchpad"`
+	DateUtc   DateUtc `json:"date_utc"`
+}
+type DateUtc struct {
+	Gte time.Time `json:"$gte"`
+	Lt  time.Time `json:"$lt"`
+}
+
+type Options struct {
+	Pagination bool `json:"pagination"`
+	Limit      int  `json:"limit"`
+}
+
 type Booker interface {
 	GetAll() ([]Booking, error)
 	Create(booking Booking) (*Booking, error)
 	Delete(bookingId string) (int64, error)
+	GetLaunchPad(id string) (*LaunchPad, error)
 }
 
 // UnmarshalJSON unmarshals booking JSON so that dates have the proper time.Time format.

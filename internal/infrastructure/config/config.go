@@ -28,6 +28,7 @@ const (
 	dialerKeepAliveSecsEnvVar     = "DIALER_KEEP_ALIVE_SECS"
 	tlsHandshakeTimeoutSecsEnvVar = "TLS_HANDSHAKE_TIMEOUT_SECS"
 	disableKeepAlivesEnvVar       = "DISABLE_KEEP_ALIVES"
+	spaceXAPIEndpointEnvVar       = "SPACEX_API_ENDPOINT"
 )
 
 type Config struct {
@@ -50,6 +51,7 @@ type Config struct {
 	DialerKeepAliveSecs     int
 	TLSHandshakeTimeoutSecs int
 	DisableKeepAlives       bool
+	SpaceXAPIEndpoint       string
 }
 
 // Get retrieves config from environment variables.
@@ -155,6 +157,11 @@ func Get() (Config, error) {
 		return Config{}, err
 	}
 
+	spaceXAPIEndpoint := os.Getenv(spaceXAPIEndpointEnvVar)
+	if len(spaceXAPIEndpoint) == 0 {
+		return Config{}, fmt.Errorf("unrecognised value for environment variable %s", spaceXAPIEndpointEnvVar)
+	}
+
 	cfg := Config{
 		DBUsername:              username,
 		DBPassword:              password,
@@ -175,6 +182,7 @@ func Get() (Config, error) {
 		DialerKeepAliveSecs:     dialerKeepAliveSecs,
 		TLSHandshakeTimeoutSecs: tlsHandshakeTimeoutSecs,
 		DisableKeepAlives:       disableKeepAlives,
+		SpaceXAPIEndpoint:       spaceXAPIEndpoint,
 	}
 
 	log.Println("Config loaded from environment variables")
