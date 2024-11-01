@@ -17,6 +17,8 @@ You need Docker on your machine for this to work.
 
 It is assumed you're on a Mac.
 
+Clone this repo.
+
 Run `make start logs` from the project folder in a terminal.
 
 This will pull the Docker image for the application, run it, and show its logs.
