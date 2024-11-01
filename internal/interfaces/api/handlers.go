@@ -9,11 +9,12 @@ import (
 )
 
 type BookingHandlers struct {
-	Booker bookings.Booker
+	Booker     bookings.Booker
+	HTTPClient *http.Client
 }
 
-func NewBookingHandlers(booker bookings.Booker) BookingHandlers {
-	return BookingHandlers{Booker: booker}
+func NewBookingHandlers(booker bookings.Booker, client *http.Client) BookingHandlers {
+	return BookingHandlers{Booker: booker, HTTPClient: client}
 }
 
 func (b *BookingHandlers) Get(w http.ResponseWriter, r *http.Request) {
