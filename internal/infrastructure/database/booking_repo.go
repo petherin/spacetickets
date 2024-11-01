@@ -113,3 +113,15 @@ func (p *PostGres) GetLaunchPad(id string) (*bookings.LaunchPad, error) {
 
 	return &result, nil
 }
+
+func (p *PostGres) IsLaunchScheduleValid(launchPadId, dayOfWeek, destinationId string) (bool, error) {
+	var count int
+
+	err := p.Repo.QueryRow(`SELECT count(*)	FROM launchpad_schedule WHERE launchpad_id = $1 AND destination_id = $2 AND day_of_week = $3`,
+		launchPadId, destinationId, dayOfWeek).Scan(&count)
+	if err != nil {
+		return false, fmt.Errorf("error scanning launchpad_schedule: %w", err)
+	}
+
+	return count == 1, nil
+}

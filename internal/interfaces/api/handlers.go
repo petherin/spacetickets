@@ -62,14 +62,26 @@ func (b *BookingHandlers) Post(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "an error occurred, see logs", http.StatusInternalServerError)
 		return
 	}
+
 	if spaceXLaunches.TotalDocs > 0 {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"Status": "Flight cancelled, overlaps with SpaceX launch"}`))
 		return
 	}
-	// TODO Also validate the destination goes from the launchpad on the requested date.
 
-	// Then create booking if all OK.
+	proposedWeekDay := booking.LaunchDate.Weekday().String()
+	validLaunch, err := b.Booker.IsLaunchScheduleValid(booking.LaunchPadId, proposedWeekDay, booking.DestinationId)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "an error occurred, see logs", http.StatusInternalServerError)
+		return
+	}
+
+	if !validLaunch {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`{"Status": "Flight cancelled, this launchpad does not fly to the destination on the requested day"}`))
+		return
+	}
 
 	newBooking, err := b.Booker.Create(booking)
 	if err != nil {

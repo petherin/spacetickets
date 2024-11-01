@@ -61,6 +61,7 @@ type Booker interface {
 	Create(booking Booking) (*Booking, error)
 	Delete(bookingId string) (int64, error)
 	GetLaunchPad(id string) (*LaunchPad, error)
+	IsLaunchScheduleValid(launchPadId, dayOfWeek, destinationId string) (bool, error)
 }
 
 // UnmarshalJSON unmarshals booking JSON so that dates have the proper time.Time format.
