@@ -5,6 +5,15 @@ services:
     environment:
       - API_PORT=8080
       - SWAGGER_PORT=8081
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=example
+      - DB_HOST=spacetickets-db
+      - MAX_OPEN_CONNS=10
+      - MAX_IDLE_CONNS=5
+      - DB_CONN_RETRIES=3
+      - DB_CONN_RETRY_INTERVAL_SECS=2
+      - CONN_MAX_LIFETIME_SECS=1800
     ports:
       - 8080:8080
     networks:

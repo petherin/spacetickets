@@ -3,12 +3,25 @@ package main
 import (
 	"log"
 
+	"github.com/petherin/spacetickets/internal/infrastructure/config"
+	"github.com/petherin/spacetickets/internal/infrastructure/database"
 	"github.com/petherin/spacetickets/internal/infrastructure/http"
 	"github.com/petherin/spacetickets/internal/interfaces/api"
 )
 
 func main() {
-	handlers := api.NewBookingHandlers(nil)
+	cfg, err := config.Get()
+	if err != nil {
+		log.Fatalf("failed to get config: %s\n", err)
+	}
+
+	repo, err := database.New(cfg)
+	if err != nil {
+		log.Fatalf("failed to create booking repo client: %s\n", err)
+	} 
+	defer repo.Close()
+
+	handlers := api.NewBookingHandlers(repo)
 
 	svr := http.New(":8080", handlers)
 

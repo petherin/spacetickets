@@ -75,8 +75,8 @@ definitions:
       last_name: Thomson
       gender: Male
       birthday: "2000-04-12"
-      launch_pad_id: 5e9e4501f5090910d4566f83
-      destination_id: 3e9e4501f5090910d4566f85
+      launch_pad_id: d95c83bb-be3f-4bdb-93fe-77015d95f759
+      destination_id: 466fc378-14eb-4ed9-8bec-d29abe54c5a9
       launch_date: "2021-12-01"
     type: object
     properties:

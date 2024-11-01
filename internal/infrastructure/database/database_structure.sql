@@ -24,6 +24,7 @@ SET default_with_oids = false;
 CREATE TABLE launchpads (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     full_name character varying NOT NULL,
+    spacex_launchpad_id char(24) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -70,13 +71,13 @@ ALTER TABLE ONLY bookings
 ALTER TABLE ONLY launchpad_schedule
     ADD CONSTRAINT launchpad_schedule_pkey PRIMARY KEY (id);
 
-INSERT INTO launchpads(id, full_name, created_at, updated_at) VALUES
-    ('d95c83bb-be3f-4bdb-93fe-77015d95f759', 'Vandenberg Space Force Base Space Launch Complex 3W', NOW(), NOW()),
-    ('b542c0cf-7fe3-4bb1-a63f-7cbdf8359975', 'Cape Canaveral Space Force Station Space Launch Complex 40', NOW(), NOW()),
-    ('b09e0b80-51ca-44ac-820a-d5b95b209cad', 'SpaceX South Texas Launch Site', NOW(), NOW()),
-    ('e169113a-ae89-4c39-9a28-3cbc1c96e5e0', 'Kwajalein Atoll Omelek Island', NOW(), NOW()),
-    ('9f8cb517-ca3b-4810-baef-80b48b8cf5e6', 'Vandenberg Space Force Base Space Launch Complex 4E', NOW(), NOW()),
-    ('4079f070-3e58-4e61-8af7-05c8de8e1fbf', 'Kennedy Space Center Historic Launch Complex 39A', NOW(), NOW());
+INSERT INTO launchpads(id, full_name, spacex_launchpad_id, created_at, updated_at) VALUES
+    ('d95c83bb-be3f-4bdb-93fe-77015d95f759', 'Vandenberg Space Force Base Space Launch Complex 3W', '5e9e4501f5090910d4566f83', NOW(), NOW()),
+    ('b542c0cf-7fe3-4bb1-a63f-7cbdf8359975', 'Cape Canaveral Space Force Station Space Launch Complex 40', '5e9e4501f509094ba4566f84', NOW(), NOW()),
+    ('b09e0b80-51ca-44ac-820a-d5b95b209cad', 'SpaceX South Texas Launch Site', '5e9e4502f5090927f8566f85', NOW(), NOW()),
+    ('e169113a-ae89-4c39-9a28-3cbc1c96e5e0', 'Kwajalein Atoll Omelek Island', '5e9e4502f5090995de566f86', NOW(), NOW()),
+    ('9f8cb517-ca3b-4810-baef-80b48b8cf5e6', 'Vandenberg Space Force Base Space Launch Complex 4E', '5e9e4502f509092b78566f87', NOW(), NOW()),
+    ('4079f070-3e58-4e61-8af7-05c8de8e1fbf', 'Kennedy Space Center Historic Launch Complex 39A', '5e9e4502f509094188566f88', NOW(), NOW());
 
 INSERT INTO destinations(id, name, created_at, updated_at) VALUES
     ('466fc378-14eb-4ed9-8bec-d29abe54c5a9', 'Moon', NOW(), NOW()),
